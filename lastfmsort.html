@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+	<meta charset=utf-8>
+	<title>last.fm duration sort</title>
+
+	<style type="text/css">
+		* {
+			font-family: "Courier New", Courier, monospace;
+		}
+		body {
+			background-color: #CCC6FF;
+		}
+		div.mid-page {
+			text-align: center;
+			margin: 25px 100px 75px;
+		}
+		div.midder-page {
+			margin: auto;
+			width: 200px;
+		}
+		fieldset{
+			background-color: white;
+		}	
+		li, p {
+			line-height: 1.5;
+			  list-style-position: inside;
+
+		}
+	</style>
+</head>
+
+<body onload="init()">
+	<div class="mid-page">
+		<div id=intro>
+			<h2>last.fm track duration sorter</h2>
+			<p>Top tracks sorted by time listened</p>
+		</div>
+		<div id=input class=midder-page>
+			<form id="inputForm">
+				<fieldset>
+					last.fm username:<br>
+					<input type="text" name="username" id="username-search" required>
+					<p>
+						<input type="radio" name="timeRange" value="7day" id="week" checked>
+						<label for="week">last week</label>
+					</p>
+					<p>
+						<input type="radio" name="timeRange" value="1month" id="month" checked>
+						<label for="month">last month</label>
+					</p>
+					<p>
+						<input type="radio" name="timeRange" value="overall" id="overall" checked>
+						<label for="overall">all time</label>
+					</p>
+					<input type="submit" value="Submit">
+				</fieldset>
+			</form>
+		</div>
+		<ol id=output class=output>
+		</ol>
+		<div id=invalid class=output>
+			 <h4 id="invalidtext" hidden="true">
+         no duration data available for the following tracks:
+        </h4>
+		</div>
+	</div>
+	</div>
+</body>
+
+<script>
+	function init(){
+		const urlParams = new URLSearchParams(window.location.search);
+		const username = urlParams.get('username');
+		const timeRange = urlParams.get('timeRange');
+		if(username && timeRange){
+			var usernameInput = document.querySelector("#username-search");
+			usernameInput.value = username;
+
+			var timeInput = document.querySelector("input[value=\""+timeRange+"\"]");
+			timeInput.checked = true;
+
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/topList?username="+username+"&timeRange="+timeRange); 
+			xhr.responseType = 'json';
+			xhr.onload = function (e) {
+				renderList(xhr.response)
+			};
+			xhr.send();
+		}
+	};
+	function renderList(list){
+		var outputDiv = document.querySelector("#output");
+		var invalidDiv = document.querySelector("#invalid");
+		for(i = 0; i < list.length; i++){
+			var track = list[i];
+			var trackString = `${track.artist} - ${track.name}`
+			if(track.duration>0){
+				var node = document.createElement("LI"); 
+				var textnode = document.createTextNode(trackString+
+					`: ${track.secondsListened} seconds (${track.playCount} plays/${track.duration} seconds)`); 
+				node.appendChild(textnode); 
+				outputDiv.appendChild(node);
+		    }else{
+		    	var node = document.createElement("DIV"); 
+				var textnode = document.createTextNode(trackString); 
+				node.appendChild(textnode); 
+				invalidDiv.appendChild(node);
+				document.getElementById("invalidtext").hidden = false;
+		    }
+		}
+	}
+</script>
+</html>

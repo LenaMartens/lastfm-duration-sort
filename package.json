@@ -1,0 +1,25 @@
+{
+  "name": "lastfm-duration-sort",
+  "version": "1.0.0",
+  "description": "sort last.fm top tracks",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "last-fm": "git://github.com/baile320-forks/last-fm.git#master"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LenaMartens/lastfm-duration-sort.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LenaMartens/lastfm-duration-sort/issues"
+  },
+  "homepage": "https://github.com/LenaMartens/lastfm-duration-sort#readme"
+}
