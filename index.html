@@ -9,6 +9,9 @@
 		* {
 			font-family: "Courier New", Courier, monospace;
 		}
+		body {
+			background-color: #CCC6FF;
+		}
 		div.mid-page {
 			text-align: center;
 			margin: 25px 100px 75px;
@@ -16,6 +19,9 @@
 		div.midder-page {
 			margin: auto;
 			width: 200px;
+		}
+		fieldset{
+			background-color: white;
 		}	
 	</style>
 
@@ -29,15 +35,15 @@
 	<div class="mid-page">
 		<div id=intro>
 		<h2>last.fm track duration sorter</h2>
-			<p>You know your top tracks, but do you know what tracks have occupied the most minutes of your life?</p>
+			<p>Top tracks sorted by time listened</p>
 		</div>
 		<div id=input class=midder-page>
 			<form>
 				last.fm username:<br>
-				<input type="text" name="username" id="username">
+				<input type="text" name="username" id="username-search">
 				<br><br>
+				time range:
 				<fieldset>
-					<legend>time range:</legend>
 					<p>
 						<input type="radio" name="timeRange" value="lastWeek" id="time1" checked>
 						<label for="time1">last week</label>
