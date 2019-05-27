@@ -1,9 +1,10 @@
+require('dotenv').config(); 
 const express = require('express');
 const app = express();
 const port = 8090;
 
 const LastFM = require('last-fm');
-const lastfm = new LastFM('1340708f33d46b5c68bb63215eb11bdb', { userAgent: 'MyApp/1.0.0 (http://example.com)' });
+const lastfm = new LastFM(process.env.APIKEY, { userAgent: 'MyApp/1.0.0 (http://example.com)' });
 
 app.use(express.static('.'));
 app.get('/topList', function(req,res){
